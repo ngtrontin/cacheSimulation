@@ -129,6 +129,7 @@ def main():
 #     try:
 #         for event, address in ReadTrace(trace_file):
 #             print("helo")
+              #test thử switch branch
 #     except FileNotFoundError: 
 #         print(f"Can not file {trace_file}")
 #     except ValueError as e: 
