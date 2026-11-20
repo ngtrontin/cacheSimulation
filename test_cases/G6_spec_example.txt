@@ -1,0 +1,7 @@
+// G6 - Trace mau trong de bai (them lenh 9 de xem trang thai)
+2 408ed4
+0 10019d94
+2 408ed8
+1 10019d88
+2 408edc
+9

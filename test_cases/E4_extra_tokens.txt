@@ -1,0 +1,4 @@
+// E4 - Dong co qua nhieu truong: chuong trinh phai bao loi ro rang, khong crash
+0 00000010
+0 00000010 00000020
+0 00000020

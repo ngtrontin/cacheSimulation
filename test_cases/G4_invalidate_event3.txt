@@ -1,0 +1,73 @@
+// G4 - Event 3 (L2 evict, giu tinh inclusive): L1 phai bo block do. Moi nhom dung mot set rieng.
+// Event 3 phai kiem tra CA I-cache va D-cache, so sanh dung tag, dung voi moi offset trong block.
+
+// N0. Evict khi cache con rong: khong lam gi, khong loi
+3 12345678
+
+// N1. Chi xoa dung tag, line khac tag cung set con nguyen (set 0x0060)
+0 00001800   // A MISS
+0 00101800   // B MISS
+3 00001800   // xoa A
+0 00101804   // B HIT (con nguyen)
+0 00001800   // A MISS (nap lai vao way vua trong)
+
+// N2. Block co o ca I-cache va D-cache -> xoa o ca hai (set 0x0061)
+2 00001840   // I MISS
+0 00001840   // D MISS
+3 00001840   // xoa o ca hai
+2 00001840   // I MISS lai
+0 00001840   // D MISS lai
+
+// N3. Block khong co trong cache, hoac cung set nhung khac tag: khong anh huong (set 0x0062)
+0 00001880   // MISS
+3 00501880   // cung set, khac tag -> khong xoa
+0 00001884   // HIT
+3 00001900   // set khac, chua co -> khong lam gi
+0 00001880   // HIT
+
+// N4. Dia chi evict co offset khac 0 van xoa ca block (set 0x0063)
+0 000018C0   // MISS
+3 000018FF   // offset 63 cua cung block -> xoa
+0 000018C0   // MISS
+
+// N5. Line dirty bi xoa: nap lai phai sach (set 0x0064)
+1 00001900   // write MISS
+1 00001904   // write HIT -> dirty
+3 00001900   // xoa
+0 00001900   // read MISS -> line moi Dirty 0
+
+// N6. Nap vao way trong, KHONG duoi line hop le khac (set 0x0065)
+0 00001940   // A way 0
+0 00101940   // B way 1
+0 00201940   // C way 2
+0 00301940   // D way 3
+3 00201940   // xoa C (way 2)
+0 00501940   // E MISS -> vao way 2
+0 00001940   // A HIT
+0 00101940   // B HIT
+0 00301940   // D HIT
+
+// N7. Xoa line moi nhat roi xoa line cu nhat, kiem tra LRU sau khi nap lai (set 0x0066)
+0 00001980   // A
+0 00101980   // B
+0 00201980   // C
+0 00301980   // D
+3 00301980   // xoa D (moi nhat)
+0 00401980   // E MISS -> vao way 3
+3 00001980   // xoa A (cu nhat)
+0 00501980   // F MISS -> vao way 0
+0 00101980   // B HIT
+
+// N8. Xoa het cac way cua mot set roi nap lai (set 0x0067)
+0 000019C0   // A
+0 001019C0   // B
+3 000019C0   // xoa A
+3 001019C0   // xoa B
+0 002019C0   // C MISS -> vao way 0
+
+// N9. Chi co o I-cache (set 0x0068)
+2 00001A00   // MISS
+3 00001A00   // xoa
+2 00001A00   // MISS lai
+
+9

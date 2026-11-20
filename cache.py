@@ -144,12 +144,36 @@ class Cache:
                 line.block_address = 0
 
     # event 9
-    def print_content(self): 
-        for cache_set in self.sets:
-            for line in cache_set:
-                if(line.valid):
-                    print(line)
-                    print(self.status)
+    def print_cache_content(self):
+    #    """In các line valid của cache: set, way, tag, dirty, LRU.
+    #   LRU là thứ hạng trong set: 0 = cũ nhất (victim), n-1 = mới nhất."""
+        print(f"--- {self.name} contents ---")
+        count = 0
+        for set_index, cache_set in enumerate(self.sets):
+            valid_lines = [(w, l) for w, l in enumerate(cache_set) if l.valid]
+            if not valid_lines:
+                continue
+            # sắp theo last_used tăng dần rồi đánh số 0,1,2,...
+            by_age = sorted(valid_lines, key=lambda wl: wl[1].last_used)
+            rank = {w: r for r, (w, _) in enumerate(by_age)}
+            for way, line in valid_lines:
+                print(
+                    f"Set {set_index:#06x} Way {way} "
+                    f"Tag {line.tag:#05x} "
+                    f"Dirty {int(line.dirty)} LRU {rank[way]}"
+                )
+                count += 1
+        if count == 0:
+            print("(no valid lines)")
+
+    def print_statistics(self):
+        s = self.status
+        print(f"--- {self.name} statistics ---")
+        print(f"Cache reads  : {s.reads}")
+        print(f"Cache writes : {s.writes}")
+        print(f"Cache hits   : {s.hits}")
+        print(f"Cache misses : {s.misses}")
+        print(f"Hit ratio    : {s.hit_ratio():.4f}")
 
     def reset(self):
         # cache_set là 1 set có dạng [way0][way1] -> for thứ 2 là truy cập vào line được chứa trong mỗi way

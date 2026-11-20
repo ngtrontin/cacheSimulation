@@ -1,0 +1,69 @@
+// G3 - Chinh sach ghi cua D-cache: write-allocate, lan ghi DAU write-through, cac lan sau write-back.
+// Moi nhom dung mot set rieng (0x0050 tro len). A..G la cac tag 0..6 cung set.
+// Dirty chi bang 1 tu lan ghi THU HAI tro di vao cung line.
+// Khi line dirty bi duoi: Write to L2 <dia chi line BI DUOI> roi moi Read / Read for Ownership line moi.
+
+// W1. Write miss: Read for Ownership, line vao cache, lan ghi dau van sach (set 0x0050)
+1 00001400   // write MISS
+0 00001404   // read HIT (line da duoc nap boi lan ghi)
+
+// W2. Lan ghi thu hai -> dirty, doc/ghi tiep van dirty (set 0x0051)
+1 00001440   // write MISS, Dirty 0
+1 00001444   // write HIT -> Dirty 1
+1 00001448   // write HIT, van Dirty 1
+0 0000144C   // read HIT, van Dirty 1
+
+// W3. Line nap boi DOC, lan ghi dau van la write-through (set 0x0052)
+0 00001480   // read MISS
+1 00001484   // write HIT lan 1 -> Dirty 0
+1 00001488   // write HIT lan 2 -> Dirty 1
+
+// W4. Duoi line dirty khi DOC (set 0x0053)
+1 000014C0   // A write MISS
+1 000014C4   // A write HIT -> dirty
+0 001014C0   // B
+0 002014C0   // C
+0 003014C0   // D (set day, A cu nhat)
+0 004014C0   // E MISS -> Write to L2 0x14c0 roi Read from L2 0x4014c0
+
+// W5. Duoi line dirty khi GHI (set 0x0054)
+1 00001500   // A write MISS
+1 00001504   // A write HIT -> dirty
+0 00101500   // B
+0 00201500   // C
+0 00301500   // D
+1 00401500   // E write MISS -> Write to L2 0x1500 roi Read for Ownership 0x401500
+
+// W6. Duoi line SACH (chi ghi 1 lan = write-through) khong co Write to L2 (set 0x0055)
+1 00001540   // A write MISS, Dirty 0
+0 00101540   // B
+0 00201540   // C
+0 00301540   // D
+0 00401540   // E MISS -> thay A, KHONG co Write to L2
+
+// W7. Nap lai line vua bi duoi: trang thai dirty va "da ghi lan dau" phai duoc xoa (set 0x0056)
+1 00001580   // A write MISS
+1 00001584   // A write HIT -> dirty
+0 00101580   // B
+0 00201580   // C
+0 00301580   // D
+0 00401580   // E MISS -> thay A dirty: Write to L2 0x1580
+1 00001580   // A write MISS (thay B sach) -> lan ghi dau lai la write-through -> Dirty 0
+
+// W8. Write hit cap nhat LRU; chi line dirty moi gay Write to L2 (set 0x0057)
+1 000015C0   // A MISS
+1 001015C0   // B MISS
+1 002015C0   // C MISS
+1 003015C0   // D MISS
+1 000015C4   // A write HIT -> A dirty, thu tu cu->moi: B C D A
+1 002015C4   // C write HIT -> C dirty, thu tu: B D A C
+1 004015C0   // E MISS -> thay B (sach), khong Write to L2
+1 005015C0   // F MISS -> thay D (sach), khong Write to L2
+1 006015C0   // G MISS -> thay A (dirty): Write to L2 0x15c0
+
+// W9. Ghi du lieu khong anh huong I-cache (set 0x0058)
+2 00001600   // I MISS
+1 00001600   // D write MISS (I-cache khong doi)
+2 00001604   // I HIT
+
+9
