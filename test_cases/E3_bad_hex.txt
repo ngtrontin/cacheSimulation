@@ -1,0 +1,4 @@
+// E3 - Dia chi khong phai so hex: chuong trinh phai bao loi ro rang, khong crash
+0 00000010
+0 GHIJ1234
+0 00000020

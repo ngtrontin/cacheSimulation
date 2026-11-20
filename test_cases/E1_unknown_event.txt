@@ -1,0 +1,4 @@
+// E1 - Event khong ton tai (5): chuong trinh phai bao loi ro rang, khong crash
+0 00000010
+5 00000100
+0 00000020

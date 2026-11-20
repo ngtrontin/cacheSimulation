@@ -1,0 +1,4 @@
+// E2 - Event ghi thieu dia chi: chuong trinh phai bao loi ro rang, khong crash
+0 00000010
+1
+0 00000020
