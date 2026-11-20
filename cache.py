@@ -79,7 +79,7 @@ class Cache:
             victim_line = self.sets[address_info.set_index][victim_way]
             if(victim_line.valid and victim_line.dirty):
                 self.l2.write_back(victim_line.block_address)
-            self.l2.read(victim_line.block_address)
+            self.l2.read(address_info.block_address)
             #update line mới mà Cpu cần đọc từ L2 vào cache
             victim_line.tag = address_info.tag_index
             victim_line.valid = True
@@ -93,8 +93,6 @@ class Cache:
     # Write Allocate: Khi ghi vào địa chỉ chưa có trong Cache, đưa Cache Line tương ứng vào Cache trước rồi mới thực hiện ghi.
     # Write-Through: Ghi thay đổi xuống L2 ngay lập tức.
     # Write-Back: Giữ thay đổi trong L1; đánh dấu Dirty. Khi Line bị thay thế thì mới ghi dữ liệu xuống L2.
-    
-    # CHƯA HOÀN THIỆN 
     
     def write(self, address_info):
         self.status.writes += 1

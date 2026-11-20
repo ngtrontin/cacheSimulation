@@ -1,53 +1,31 @@
-// G1 - Anh xa dia chi (tag/set/offset) va doc HIT/MISS co ban
-// Dia chi 32 bit = tag 12 bit | set 14 bit | offset 6 bit.
-// Hai dia chi thuoc cung line khi giong tag va set. Moi nhom dung set rieng nen khong anh huong nhau.
-
-// A. Cold miss roi hit (set 0x0000, offset 0)
-0 00000000   // MISS
-0 00000000   // HIT
-
-// B. Offset cuoi line va ranh gioi giua hai line (set 0x0001 va 0x0002)
-0 00000040   // MISS (set 1)
-0 0000007F   // HIT  (offset 63, byte cuoi cua line)
-0 00000080   // MISS (set 2, byte dau cua line ke tiep)
-
-// C. Offset le, khong gia dinh alignment (set 0x0003)
-0 000000C1   // MISS
-0 000000C3   // HIT
-0 000000F5   // HIT
-0 000000FE   // HIT
-
-// D. Set lon nhat 0x3FFF, tag 0
-0 00FFFFC0   // MISS
-0 00FFFFFF   // HIT (offset 63)
-
-// E. Dia chi lon nhat 0xFFFFFFFF (tag 0xFFF, set 0x3FFF, offset 63), cung set voi D nhung khac tag
-0 FFFFFFFF   // MISS (way thu 2 cua set 0x3FFF)
-0 FFFFFFC0   // HIT
-0 00FFFFC0   // HIT (line cua D van con)
-
-// F. Cung set 0x0000, khac tag (cach nhau 1MB): hai line cung ton tai
-0 FFF00000   // MISS
-0 FFF00020   // HIT
-0 00000000   // HIT (line cua nhom A van con)
-
-// G. Doc tuan tu tung byte trong cung 1 line (spatial locality, set 0x0004)
-0 00000100   // MISS
-0 00000101   // HIT
-0 00000102   // HIT
-0 00000103   // HIT
-
-// H. I-cache hoat dong doc lap voi D-cache, cung dia chi van MISS lan dau
-2 00000000   // MISS (D-cache da co dia chi nay nhung day la I-cache)
-2 00000000   // HIT
-2 FFFFFFFF   // MISS
-2 FFFFFFC0   // HIT
-2 000000C1   // MISS
-2 000000F5   // HIT
-2 00000100   // MISS (set 4)
-
-// I. I-cache 2 way: cung set 0x0000, khac tag
-2 FFF00000   // MISS (way 2)
-2 00000000   // HIT (line cua nhom H van con)
-
-9
+0 00000000  
+0 00000000 
+0 00000040   
+0 0000007F  
+0 00000080 
+0 000000C1   
+0 000000C3 
+0 000000F5  
+0 000000FE  
+0 00FFFFC0 
+0 00FFFFFF 
+0 FFFFFFFF   
+0 FFFFFFC0 
+0 00FFFFC0   
+0 FFF00000  
+0 FFF00020  
+0 00000000   
+0 00000100   
+0 00000101  
+0 00000102 
+0 00000103 
+2 00000000  
+2 00000000   
+2 FFFFFFFF  
+2 FFFFFFC0   
+2 000000C1   
+2 000000F5   
+2 00000100 
+2 FFF00000 
+2 00000000 
+9 00000000
