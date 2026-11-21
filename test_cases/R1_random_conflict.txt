@@ -1,4 +1,3 @@
-// R1_random_conflict.txt: sinh tu gen_random_trace.py (seed 1, 3000 dong)
 0 0010008f
 1 007000f0
 2 001000c3

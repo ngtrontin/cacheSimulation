@@ -1,22 +1,13 @@
-// G2 - Thay the LRU (replacement policy). Moi nhom dung mot set rieng.
-// A,B,C,D,E la cac tag 0..4 (cach nhau 1MB = 0x100000) cung vao mot set.
-// LRU in ra: 0 = cu nhat (bi duoi), moi nhat = so way - 1.
-
-// ===== D-cache 4 way =====
-
-// L1. Day set, HIT doi thu tu, thay lan luot (set 0x0010)
-0 00000400   // A MISS
-0 00100400   // B MISS
-0 00200400   // C MISS
-0 00300400   // D MISS (set day)
-0 00000404   // A HIT -> thu tu cu->moi: B C D A
-0 00400400   // E MISS -> thay B
-0 00100400   // B MISS -> thay C
-0 00200400   // C MISS -> thay D
-0 00300400   // D MISS -> thay A
-0 00000400   // A MISS -> thay E
-
-// L2. Truy cap vong tron 5 tag trong 4 way: LRU cho toan MISS (set 0x0011)
+0 00000400
+0 00100400
+0 00200400
+0 00300400
+0 00000404
+0 00400400
+0 00100400
+0 00200400
+0 00300400
+0 00000400
 0 00000440
 0 00100440
 0 00200440
@@ -27,22 +18,18 @@
 0 00200440
 0 00300440
 0 00400440
-
-// L3. LRU dua tren THOI GIAN dung gan nhat, khong phai so lan dung (set 0x0012)
-0 00000480   // A MISS
-0 00000481   // A HIT
-0 00000482   // A HIT
-0 00000483   // A HIT
-0 00100480   // B MISS
-0 00200480   // C MISS
-0 00300480   // D MISS (thu tu cu->moi: A B C D, du A duoc dung nhieu nhat)
-0 00400480   // E MISS -> thay A
-0 00000480   // A MISS (chung to A da bi duoi)
-
-// L4. Cac set doc lap: thrash set 0x0014 khong anh huong set 0x0013
-0 000004C0   // MISS (set 0x0013)
-0 001004C0   // MISS (set 0x0013)
-0 00000500   // set 0x0014: 5 tag x 2 vong, toan MISS
+0 00000480
+0 00000481
+0 00000482
+0 00000483
+0 00100480
+0 00200480
+0 00300480
+0 00400480
+0 00000480
+0 000004C0
+0 001004C0
+0 00000500
 0 00100500
 0 00200500
 0 00300500
@@ -52,33 +39,24 @@
 0 00200500
 0 00300500
 0 00400500
-0 000004C0   // HIT (khong bi anh huong)
-0 001004C0   // HIT
-
-// ===== I-cache 2 way =====
-
-// L5. Thay the theo LRU (set 0x0020)
-2 00000800   // A MISS
-2 00100800   // B MISS
-2 00000808   // A HIT -> thu tu cu->moi: B A
-2 00200800   // C MISS -> thay B
-2 00100800   // B MISS -> thay A
-2 00000800   // A MISS -> thay C
-
-// L6. Truy cap vong tron 3 tag trong 2 way: toan MISS (set 0x0021)
+0 000004C0
+0 001004C0
+2 00000800
+2 00100800
+2 00000808
+2 00200800
+2 00100800
+2 00000800
 2 00000840
 2 00100840
 2 00200840
 2 00000840
 2 00100840
 2 00200840
-
-// L7. HIT lien tiep giu line moi nhat (set 0x0022)
-2 00000880   // A MISS
-2 00100880   // B MISS
-2 00100884   // B HIT
-2 00100888   // B HIT
-2 00200880   // C MISS -> thay A (A cu nhat)
-2 00100880   // B HIT (B van con)
-
-9
+2 00000880
+2 00100880
+2 00100884
+2 00100888
+2 00200880
+2 00100880
+9 00000000

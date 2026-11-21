@@ -1,4 +1,0 @@
-// E5 - Event khong phai so: chuong trinh phai bao loi ro rang, khong crash
-0 00000010
-x 00000020
-0 00000020

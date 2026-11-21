@@ -1,34 +1,21 @@
-// G7 - Gia lap mot chuong trinh nho: vong lap 4 lan
-// Code o 0x00400000 (hai line: 0x400000 va 0x400040), mang A o 0x10010000 (doc), mang B o 0x10020000 (ghi)
-// Moi vong lap i: lay 3 lenh, doc A[4i], ghi B[4i] (ca 4 phan tu nam trong cung 1 line)
-// Ky vong: lan lap dau MISS, cac lan sau HIT; ghi B lan 1 sach, tu lan 2 tro di dirty.
-
-// i = 0
 2 00400000
 2 00400004
 2 00400040
 0 10010000
 1 10020000
-
-// i = 1
 2 00400000
 2 00400004
 2 00400040
 0 10010010
 1 10020010
-
-// i = 2
 2 00400000
 2 00400004
 2 00400040
 0 10010020
 1 10020020
-
-// i = 3
 2 00400000
 2 00400004
 2 00400040
 0 10010030
 1 10020030
-
-9
+9 00000000

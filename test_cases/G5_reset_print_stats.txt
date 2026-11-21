@@ -1,40 +1,26 @@
-// G5 - Event 8 (reset), event 9 (in) va thong ke
-// Cuoi file, thong ke chi tinh tu sau lan reset cuoi cung.
-
-// Cache rong: in va reset khong loi
-9            // ca hai (no valid lines)
-8            // reset khi dang rong
-9            // van rong
-
-// Tao trang thai co ca I va D, co line dirty
-2 00000010   // I MISS (set 0)
-2 00000050   // I MISS (set 1)
-0 00000010   // D read MISS (set 0)
-1 00000010   // D write HIT lan 1 -> sach
-1 00000014   // D write HIT lan 2 -> Dirty 1
-0 00001000   // D read MISS (set 0x40)
-9            // I: 2 line; D: set 0 dirty, set 0x40 sach
-9            // in lan 2: giong het lan 1, khong doi trang thai
-
-// Reset xoa het cache, ke ca dirty
-8
-9            // ca hai rong
-
-// Sau reset moi thu bat dau lai tu dau: MISS va "lan ghi dau" tinh lai tu dau
-0 00000010   // MISS (cold)
-1 00000010   // write HIT lan 1 -> Dirty 0 (co dirty nghia la reset khong xoa co "da ghi")
-9
-1 00000014   // lan 2 -> Dirty 1
-9
-
-// Reset hai lan lien tiep
-8
-8
-9            // rong
-
-// Doan cuoi: thong ke chi gom 4 truy cap duoi day
-2 000000D0   // I MISS
-2 000000D0   // I HIT
-0 00000010   // D MISS
-1 00000010   // D write HIT
-9
+9 00000000
+8 00000000
+9 00000000
+2 00000010
+2 00000050
+0 00000010
+1 00000010
+1 00000014
+0 00001000
+9 00000000
+9 00000000
+8 00000000
+9 00000000
+0 00000010
+1 00000010
+9 00000000
+1 00000014
+9 00000000
+8 00000000
+8 00000000
+9 00000000
+2 000000D0
+2 000000D0
+0 00000010
+1 00000010
+9 00000000

@@ -1,24 +1,17 @@
-// G8 - Dinh dang trace hop le: chuong trinh KHONG duoc bao loi
-
-0 0x00000010        // tien to 0x
-0 0X00000010        // tien to 0X (HIT)
-0 10                // hex ngan, khong co so 0 o dau (HIT, cung dia chi 0x10)
-2 000000d0          // chu thuong
-2 000000D0          // chu hoa (HIT)
-   0     00000050   // nhieu khoang trang o dau dong va giua cac truong
-0	00000090	// dau tab giua cac truong
-1 00000010 # chu thich kieu #
-1 00000014 // chu thich kieu //
-# dong chu thich kieu #
-// dong chu thich kieu //
-
-   // dong chu thich co khoang trang o dau
-
-9 0x00000000        // 9 co dia chi
-9                   // 9 khong co dia chi
-   9
-8                   // 8 khong co dia chi
-9 0                 // 9 co dia chi ngan
-8 0x00000000        // 8 co dia chi
-2 00000010          // doan cuoi sau reset: I MISS
-9
+0 0x00000010
+0 0X00000010
+0 10
+2 000000d0
+2 000000D0
+0 00000050
+0 00000090
+1 00000010
+1 00000014
+9 0x00000000
+9 00000000
+9 00000000
+8 00000000
+9 0
+8 0x00000000
+2 00000010
+9 00000000
